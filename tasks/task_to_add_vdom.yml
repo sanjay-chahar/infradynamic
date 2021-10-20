@@ -1,0 +1,21 @@
+- name: add new vdom.
+  fmgr_dvmdb_device_vdom:
+        bypass_validation: False
+        workspace_locking_adom: "FWC"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "{{adom_name}}"
+        device: "{{adom_name}}"
+        state: "{{new_state}}"
+        dvmdb_device_vdom:
+           comments: "manage by ansible"
+           name: "{{vdom_name}}"
+           #opmode: nat
+           #rtm_prof_id: 4
+           #status: add
+           #vpn_id: 2121
+           #ignore_errors: true
+           #changed_when: true
+           #register: vdom_configure
+

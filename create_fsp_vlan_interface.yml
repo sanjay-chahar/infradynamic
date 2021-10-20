@@ -1,0 +1,208 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+  - name: Configure interfaces.
+    fmgr_fsp_vlan_interface:
+      bypass_validation: False
+      workspace_locking_adom: "FWC"
+      rc_succeeded: 0
+      rc_failed: -2
+      adom: "FWC"
+      vlan: 2121
+      fsp_vlan_interface:
+        ac-name: null
+        aggregate: null
+        alias: null
+        allowaccess:
+          - ping
+          - https
+          - ssh
+        ap-discover: enable
+        broadcast-forward: disable
+        captive-portal: 0
+        cli-conn-status: 0
+        #client-options: null
+        auto-auth-extension-device: disable
+        bandwidth-measure-time: 0
+        bfd: global
+        color: 0
+        dedicated-to: none
+        description: null
+        detected-peer-mtu: 0
+        device-identification: disable
+        devindex: 0
+        dhcp-client-identifier: null
+        dhcp-relay-interface: []
+        dhcp-relay-interface-select-method: auto
+        dhcp-relay-service: disable
+        dhcp-renew-time: 0
+        disconnect-threshold: 0
+        drop-fragment: disable
+        drop-overlapped-fragment: disable
+        #egress-queues:
+        # cos0: []
+        # cos1: []
+        # cos2: []
+        # cos3: []
+        # cos4: []
+        # cos5: []
+        # cos6: []
+        # cos7: []
+        egress-shaping-profile: []
+        estimated-downstream-bandwidth: 0
+        estimated-upstream-bandwidth: 0
+        explicit-ftp-proxy: disable
+        explicit-web-proxy: disable
+        external: disable
+        fail-action-on-extender: soft-restart
+        fail-detect: disable
+        fortilink: disable
+        fortilink-backup-link: 0
+        fortilink-neighbor-detect: fortilink
+        fortilink-stacking: enable
+        forward-domain: 0
+        icmp-accept-redirect: enable
+        icmp-send-redirect: enable
+        ident-accept: disable
+        inbandwidth: 0
+        ingress-shaping-profile: []
+        ingress-spillover-threshold: 0
+        #interface:
+        # - port6
+        internal: 0
+        ip:
+          - 192.168.0.100
+          - 255.255.255.0
+        ip-managed-by-fortiipam: disable
+        ipmac: disable
+        #ipv6:
+        # autoconf: disable
+        # dhcp6-information-request: disable
+        # dhcp6-prefix-delegation: disable
+        # dhcp6-prefix-hint: '::/0'
+        # dhcp6-prefix-hint-plt: 604800
+        # dhcp6-prefix-hint-vlt: 2592000
+        # dhcp6-relay-ip: []
+        # dhcp6-relay-service: disable
+        # dhcp6-relay-type: regular
+        # icmp6-send-redirect: enable
+        # interface-identifier: '::'
+        # ip6-address: '::/0'
+        # ip6-default-life: 1800
+        # ip6-delegated-prefix-list: null
+        #  ip6-dns-server-override: enable
+        #  ip6-extra-addr: null
+        # ip6-hop-limit: 0
+        # ip6-link-mtu: 0
+        # ip6-manage-flag: disable
+        # ip6-max-interval: 600
+        # ip6-min-interval: 198
+        # ip6-mode: static
+        # ip6-other-flag: disable
+        # ip6-prefix-list: null
+        # ip6-reachable-time: 0
+        # ip6-retrans-time: 0
+        # ip6-send-adv: disable
+        # ip6-subnet: '::/0'
+        # ip6-upstream-interface: []
+        #  nd-mode: basic
+        # ra-send-mtu: enable
+        # unique-autoconf-addr: disable
+        # vrip6_link_local: '::'
+        # vrrp-virtual-mac6: disable
+        # vrrp6: null
+        l2forward: disable
+        #l2tp-client-settings: null
+        lldp-network-policy: []
+        managed-subnetwork-size: '256'
+        management-ip:
+         - 0.0.0.0
+         - 0.0.0.0
+        measured-downstream-bandwidth: 0
+        measured-upstream-bandwidth: 0
+        min-links: 1
+        min-links-down: operational
+        mode: static
+        monitor-bandwidth: disable
+        mtu-override: disable
+        name: my-intf
+        ndiscforward: enable
+        netbios-forward: disable
+        netflow-sampler: disable
+        outbandwidth: 0
+        polling-interval: 20
+        pppoe-unnumbered-negotiate: enable
+        pptp-auth-type: auto
+        pptp-client: disable
+        pptp-password:
+        pptp-server-ip: 0.0.0.0
+        pptp-timeout: 0
+        pptp-user: null
+        preserve-session-route: disable
+        priority-override: enable
+        proxy-captive-portal: disable
+        redundant-interface: null
+        ring-rx: 0
+        ring-tx: 0
+        role: lan
+        sample-direction: both
+        sample-rate: 2000
+        secondary-IP: disable
+        secondaryip: null
+        security-exempt-list: []
+        security-external-logout: null
+        security-mac-auth-bypass: disable
+        security-mode: none
+        security-redirect-url: null
+        service-name: null
+        sflow-sampler: disable
+        #snmp-index: 117
+        speed: auto
+        spillover-threshold: 0
+        src-check: enable
+        status: up
+        stpforward: disable
+        stpforward-mode: rpl-all-ext-id
+        subst: disable
+        substitute-dst-mac: '00:00:00:00:00:00'
+        swc-first-create: 0
+        swc-vlan: 0
+        switch: null
+        switch-controller-access-vlan: disable
+        switch-controller-arp-inspection: disable
+        switch-controller-feature: none
+        switch-controller-igmp-snooping-fast-leave: disable
+        switch-controller-igmp-snooping-proxy: disable
+        switch-controller-iot-scanning: disable
+        switch-controller-learning-limit: 0
+        switch-controller-mgmt-vlan: 4094
+        switch-controller-nac: []
+        switch-controller-rspan-mode: disable
+        switch-controller-source-ip: outbound
+        switch-controller-traffic-policy: []
+        #tagging: null
+        tcp-mss: 0
+        trust-ip6-1: '::/0'
+        trust-ip6-2: '::/0'
+        trust-ip6-3: '::/0'
+        type: vlan
+        #vdom:
+        # - my-vdom
+        vindex: 0
+        vlan-protocol: 8021q
+        vlanforward: disable
+        vlanid: 2109
+        vrf: 0
+        vrrp: null
+        vrrp-virtual-mac: disable
+        wccp: disable
+        weight: 0
+        #wifi-networks: null
+        wins-ip: 0.0.0.0

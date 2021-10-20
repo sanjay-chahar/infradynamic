@@ -1,0 +1,49 @@
+- hosts: bucks  #kent
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+   - name: Device VDOM table.
+     import_tasks: tasks/task_to_add_vdom.yml
+
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml
+
+   - name: Include a task for policy okg
+     import_tasks: tasks/task_to_add_policy_pkg.yml
+
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml
+
+   - name: task to add firewall rule inside policy
+     import_tasks: tasks/task_to_add_firewall.yml 
+
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml
+  
+   - name: add device for policy pkg installation
+     import_tasks: tasks/tasks_assign_device_to_policy_pkg.yml
+
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml
+
+   - name: install policy pkg
+     import_tasks: tasks/task_to_install_policy_pkg.yml
+  
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml  
+
+   - name: task to add interface in vdom
+     import_tasks: tasks/tasks_add_interface_with_ip.yml
+
+   - name: time out for 15 seconds to match with fortimanager
+     import_tasks: tasks/task_sleep.yml
+
+   - name: tasks to add zone in vdom
+     import_tasks: tasks/task_to_create_zone_interface.yml 
+   
+

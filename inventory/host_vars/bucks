@@ -1,0 +1,15 @@
+state: add
+new_state: present
+vdom_name: "bucks-vdom"
+wan_prof: "bucks"
+adom_name: "FWM"      
+vdom_name: "bucks-vdom" 
+policy_pkg_name: "bucks-pkg"       
+interface_name: "bucks-intf"       
+zone_name: "bucks-zone"      
+fw_rule_name: "bucks-firewall-rule"   
+port_number: "port6"             
+ip_addr: "192.168.1.100"        
+netmask: "255.255.255.0"       
+role_name: "lan"            
+vlan_id: "2209"            

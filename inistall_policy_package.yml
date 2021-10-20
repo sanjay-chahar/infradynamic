@@ -1,0 +1,36 @@
+# 02_install_policy_package_to_device.yml
+---
+- name: Add model device to FMG and install Policy Package
+  hosts: fortimanagers
+  gather_facts: no
+  connection: httpapi
+  collections:
+    - fortinet.fortimanager
+
+  tasks:
+  - name: Add policy package to model device
+    fmgr_pm_pkg_adom_obj:
+        loose_validation: true
+        method: set
+        url_params:
+          adom: FWC
+        params:
+          - data:
+              name: default
+              scope member:
+                - name: FGVM02tm21015361
+                  vdom: ans-vdom
+              type: pkg
+
+  - name: Install policy package to model device
+    fmgr_securityconsole_install_package:
+        loose_validation: true
+        method: exec
+        params:
+          - data:
+              adom: FWC
+              pkg: default
+              scope:
+                - name: FGVM02tm21015361
+                  vdom: ans-vdom
+

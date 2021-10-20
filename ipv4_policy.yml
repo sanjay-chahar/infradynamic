@@ -1,0 +1,33 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+
+  - name: Configure IPv4 policies.
+    fmgr_pkg_firewall_policy:
+        bypass_validation: False
+        workspace_locking_adom: "FWC"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "FWC"
+        pkg: "my-pkg"
+        state: present
+        pkg_firewall_policy:
+          name: "my-fw-rule"
+          action: "accept"
+          dstaddr: "all"
+          srcaddr: "all"
+          dstintf: "any"
+          srcintf: "any"
+          logtraffic: "utm"
+          service: "ALL"
+          schedule: "always"
+          policyid: 2121
+

@@ -1,0 +1,26 @@
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+   - name: no description
+     fmgr_pm_wanprof_adom:
+        bypass_validation: False
+        workspace_locking_adom: adom
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: FWC
+        pm_wanprof_adom:
+           description: "Creating by ansble"
+           name: "Ansble-wan-prof"
+           oid: 21
+           scope member:
+             -
+                 name: "FWC"
+                 vdom: "ans-vdom"
+           type: "Ansble-wan-prof"

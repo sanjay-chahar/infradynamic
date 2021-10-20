@@ -1,0 +1,43 @@
+- name: Assign or unassign global policy package to ADOM packages.
+  fmgr_securityconsole_assign_package:
+        bypass_validation: False
+        workspace_locking_adom: "{{adom_name}}"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        securityconsole_assign_package:
+           flags:
+             - cp_all_objs
+             - copy_assigned_pkg
+           pkg: "{{policy_pkg_name}}"
+           target:
+             -
+                 adom: "{{adom_name}}"
+                 excluded: disable
+                 pkg: "{{policy_pkg_name}}"
+
+
+
+
+
+
+
+
+                 #- name: 'Assign Device to policy PKG'
+                 #  fmgr_generic:
+                 #       method: "update"
+                 #  params:
+                 #        - url: /pm/pkg/adom/FWC/"{{policy_pkg_name}}"
+                 #   data:
+                 #    name: "{{policy_pkg_name}}"
+                 #            package settings:
+                 #              central-nat: disable
+                 #         consolidated-firewall-mode: disable
+                 #              fwpolicy-implicit-log: disable
+                 #         fwpolicy6-implicit-log: disable
+                 #           ngfw-mode: profile-based
+                 #          scope member:
+                 #            - name: "{{adom_name}}"
+                 #              vdom: "{{vdom_name}}"
+                 #            type: pkg
+

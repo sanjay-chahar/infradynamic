@@ -1,0 +1,12 @@
+---
+- hosts: fortimanagers
+  connection: httpapi
+  collections:
+    - fortinet.fortimanager
+  tasks:
+    - name: Get the fortimanager's ADOMs
+      fmgr_fact:
+        facts:
+          selector: dvmdb_adom
+          params:
+            adom: ''

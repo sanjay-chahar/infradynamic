@@ -1,0 +1,38 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+     adom_name: FWC
+     vdom_name: my-vdom
+     interface_id: port6
+     ip_addr: 192.168.5.25
+     netmask: 255.255.255.0
+     vlan_id: 2545
+     role_name: lan
+     interface_name: myint21
+  tasks:
+  - name: 'Add VLAN Interface to VDOM'
+    fmgr_generic:
+         method: "add"
+         params:
+          - url: "/pm/config/device/{{adom_name}}/global/system/interface"
+            data:
+              vdom:
+                - "{{vdom_name}}"
+              allowaccess: 
+                - "ping"
+                - "https"
+                - "ssh"
+              interface:
+                - "{{interface_id}}"
+              ip:
+                - "{{ip_addr}}"
+                - "{{netmask}}"      
+              vlanid: "{{vlan_id}}"
+              role: "{{role_name}}"
+              name: "{{interface_name}}"    

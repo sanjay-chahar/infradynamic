@@ -1,0 +1,77 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+
+  tasks:
+  - name: Create SD-WAN rules
+    fmgr_wanprof_system_sdwan_service:
+        bypass_validation: False
+        workspace_locking_adom: FWC
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: FWC
+        wanprof: SANJAT
+        state: present
+        wanprof_system_sdwan_service:
+           addr-mode: ipv4
+           bandwidth-weight: 200
+           default: disable
+           dscp-forward: disable
+           dscp-forward-tag: hello
+           dscp-reverse: disable
+           dscp-reverse-tag: bye
+           dst: always
+           dst-negate: disable
+           dst6: byw
+           end-port: 21
+           gateway: disable
+           groups: auto
+           hash-mode: round-robin
+           health-check: test
+           hold-down-time: 2109
+           id: 25
+           input-device: test
+           input-device-negate: disable
+           internet-service: disable
+           internet-service-app-ctrl: 21
+           internet-service-app-ctrl-group: hello
+           internet-service-custom: bye
+           internet-service-custom-group: test
+           internet-service-group: good
+           internet-service-name: sanjay
+           jitter-weight: 22
+           latency-weight: 30
+           link-cost-factor: latency
+           link-cost-threshold: 24
+           minimum-sla-meet-members: 22
+           mode: auto
+           name: skc
+           packet-loss-weight: 31
+           priority-members: 23
+           protocol: 3
+           quality-link: 2
+           role: standalone
+           route-tag: 23
+           sla:
+             -
+                 health-check: good
+                 id: 22
+           sla-compare-method: number
+           src: srcr
+           src-negate: disable
+           src6: srcr5
+           standalone-action: disable
+           start-port: 34
+           status: disable
+           tos: goodbye
+           tos-mask: gody
+           users: mon
+           tie-break: zone
+           use-shortcut-sla: disable   

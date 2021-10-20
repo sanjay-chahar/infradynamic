@@ -1,0 +1,12 @@
+---
+- name: FMGR CONNECTION GET SYS STATUS
+  hosts: fortimanagers
+  connection: httpapi
+  gather_facts: False
+
+  tasks:
+  - name: TEST FMGR CONNECTION GET SYS STATUS
+    fmgr_query:
+      adom: "root"
+      object: "custom"
+      custom_endpoint: "/sys/status"

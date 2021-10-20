@@ -1,0 +1,62 @@
+---
+- name: gathering fortimanager facts
+  hosts: fortimanagers
+  gather_facts: no
+  connection: httpapi
+  collections:
+    - fortinet.fortimanager
+  vars:
+    ansible_httpapi_use_ssl: True
+    ansible_httpapi_validate_certs: False
+    ansible_httpapi_port: 443
+  tasks:
+   - name: retrieve all the scripts
+     fmgr_fact:
+       facts:
+           selector: 'dvmdb_script'
+           params:
+               adom: 'root'
+               script: ''
+
+   - name: retrive all the interfaces
+     fmgr_fact:
+       facts:
+           selector: 'system_interface'
+           params:
+               interface: ''
+   - name: retrieve the interface port1
+     fmgr_fact:
+       facts:
+           selector: 'system_interface'
+           params:
+               interface: 'port1'
+   - name: fetch urlfilter with name urlfilter4
+     fmgr_fact:
+       facts:
+         selector: 'webfilter_urlfilter'
+         params:
+           adom: 'root'
+           urlfilter: ''
+         filter:
+           -
+             - 'name'
+             - '=='
+             - 'urlfilter4'
+         fields:
+           - 'id'
+           - 'name'
+           - 'comment'
+         sortings:
+           - 'id': 1
+             'name': -1
+   - name: Retrieve device
+     fmgr_fact:
+       facts:
+         selector: 'dvmdb_device'
+         params:
+           adom: 'root'
+           device: ''
+         option:
+           - 'get meta'
+
+

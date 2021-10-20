@@ -1,0 +1,34 @@
+---
+- name: 'Add Policy Package'
+  fmgr_fwpol_package:
+        mode: "add"
+        adom: "{{adom_name}}"
+        name: "{{policy_pkg_name}}"
+        object_type: "pkg"
+        inspection_mode: "flow"
+        ngfw_mode: "profile-based"
+        #scope_members: "ans-vdom"
+        scope_members_vdom: "{{vdom_name}}"
+- name: simple firewall rules        
+  fmgr_fwpol_ipv4:
+        mode: "add"
+        adom: "{{adom_name}}"
+        package_name: "{{policy_pkg_name}}"
+        name: "{{firewall_rule_name}}"
+        action: "accept"
+        dstaddr: "all"
+        srcaddr: "all"
+        dstintf: "any"
+        srcintf: "any"
+        logtraffic: "utm"
+        service: "ALL"
+        schedule: "always"
+- name: add device
+  fmgr_fwpol_package:
+        mode: "add"
+        adom: "{{adom_name}}"
+        name: "{{policy_pkg_name}}"
+        object_type: "pkg"
+        scope_members: "{{adom_name}}"
+        scope_members_vdom: "{{vdom_name}}"
+

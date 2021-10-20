@@ -1,0 +1,10 @@
+[herts]
+herts ansible_host=172.28.1.145 ansible_user=sanjay ansible_password=sanjay123
+
+[herts:vars]
+ansible_network_os=fortinet.fortimanager.fortimanager
+ansible_httpapi_use_ssl=yes
+ansible_httpapi_validate_certs=no
+ansible_httpapi_port=443
+ansible_python_interpreter=${VIRTUAL_ENV}/bin/python
+

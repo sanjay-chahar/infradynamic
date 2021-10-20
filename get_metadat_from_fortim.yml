@@ -1,0 +1,16 @@
+---
+- hosts: fortimanagers
+  connection: httpapi
+  collections:
+    - fortinet.fortimanager
+  gather_facts: false
+  tasks:
+  - name: Further filter of output
+    fmgr_fact:
+      facts:
+        option:
+           - get meta
+        selector: dvmdb_adom
+        params:
+          adom: FWC
+    register: adom_fact

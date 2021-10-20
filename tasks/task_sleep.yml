@@ -1,0 +1,6 @@
+---
+- name: Sleep for 15 seconds and timeout
+  wait_for:
+       delay: 7
+       timeout: 0
+

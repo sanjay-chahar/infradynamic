@@ -1,0 +1,37 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+
+  - name: add pkg policy to vdom
+    fmgr_pm_pkg_adom:
+        bypass_validation: False
+        workspace_locking_adom: "FWC"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "FWC"
+        pm_pkg_adom:
+           name: "my-pkg"
+           obj ver: 2142
+           oid: 21
+           package setting:
+              central-nat: enable
+              consolidated-firewall-mode: enable
+              fwpolicy-implicit-log: enable
+              fwpolicy6-implicit-log: enable
+              inspection-mode: flow
+              ngfw-mode: profile-based
+              #ssl-ssh-profile: <value of string>
+           scope member:
+             -
+                 name: FWC
+                 vdom: my-vdom
+           type: pkg
+

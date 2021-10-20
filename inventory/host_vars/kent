@@ -1,0 +1,15 @@
+state: add
+new_state: present
+vdom_name: "ansible-vdom"
+wan_prof: "kent"
+adom_name: "FWC"      
+vdom_name: "my-vdom" 
+policy_pkg_name: "my-pkg"       
+interface_name: "my-intf"       
+zone_name: "my-test-zone"      
+fw_rule_name: "my-firewall-rule"   
+port_number: "port6"             
+ip_addr: "192.168.0.100"        
+netmask: "255.255.255.0"       
+role_name: "lan"            
+vlan_id: "2109"            

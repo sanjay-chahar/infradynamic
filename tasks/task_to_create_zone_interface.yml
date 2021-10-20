@@ -1,0 +1,13 @@
+- name: 'create Zone'
+  fmgr_generic:
+         method: "{{state}}"
+         params:
+          - url: "/pm/config/device/{{adom_name}}/vdom/{{vdom_name}}/system/zone"
+            data:
+              - description: Created by Ansible
+                interface:
+                  - "{{interface_name}}"
+                intrazone: deny
+                name: "{{zone_name}}"
+                tagging: null
+  ignore_errors: True

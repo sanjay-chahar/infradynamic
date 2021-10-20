@@ -1,0 +1,27 @@
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+   - name: Device VDOM table.
+     fmgr_dvmdb_device_vdom:
+        bypass_validation: False
+        workspace_locking_adom: "FWC" 
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "FWC"
+        device: FWC
+        state: present
+        dvmdb_device_vdom:
+           comments: "manage by ansible"
+           name: "ans-vdom"
+           opmode: nat
+           rtm_prof_id: 4
+           status: add
+           vpn_id: 2121
+           #meta fields: test

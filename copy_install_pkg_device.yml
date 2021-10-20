@@ -1,0 +1,31 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+
+  tasks:
+  - name: Copy and install a policy package to devices.
+    fmgr_securityconsole_install_package:
+        bypass_validation: False
+        workspace_locking_adom: "FWC"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        securityconsole_install_package:
+           adom: "FWC"
+           adom_rev_comments: "for test only"
+           adom_rev_name: "rev-1.2"
+           dev_rev_comments: "no comments"
+           flags:
+             - cp_all_objs
+             - generate_rev
+           pkg: "my-pkg"
+           scope:
+             -
+                 name: "FWC"
+                 vdom: "my-vdom"

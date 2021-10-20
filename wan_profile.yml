@@ -1,0 +1,66 @@
+---
+  - hosts: fortimanagers
+    collections:
+    - fortinet.fortimanager
+    connection: httpapi
+    vars:
+      ansible_httpapi_use_ssl: True
+      ansible_httpapi_validate_certs: False
+      ansible_httpapi_port: 443
+    tasks:
+    - name: Configure WAN optimization profiles.
+      fmgr_wanopt_profile:
+        bypass_validation: False
+        workspace_locking_adom: FWC
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: FWC
+        state: present
+        wanopt_profile:
+           auth-group: nu
+           comments: "test only"
+           name: sanjay
+           transparent: disable
+           cifs:
+              byte-caching: disable
+              log-traffic: disable
+              prefer-chunking: dynamic
+              protocol-opt: protocol
+              secure-tunnel: disable
+              status: disable
+              tunnel-sharing: shared
+           ftp:
+              byte-caching: disable
+              log-traffic: enable
+              prefer-chunking: dynamic
+              protocol-opt: protocol
+              secure-tunnel: disable
+              ssl: disable
+              status: disable
+              tunnel-sharing: shared
+           http:
+              byte-caching: disable
+              log-traffic: disable
+              prefer-chunking: dynamic
+              protocol-opt: protocol
+              secure-tunnel: disable
+              ssl: disable
+              status: disable
+              tunnel-sharing: shared
+           mapi:
+              byte-caching: disable
+              log-traffic: disable
+              secure-tunnel: disable
+              status: disable
+              tunnel-sharing: shared
+           tcp:
+              byte-caching: disable
+              byte-caching-opt: mem-only
+              log-traffic: disable
+              port: 21
+              secure-tunnel: disable
+              ssl: disable
+              ssl-port: 543
+              status: enable
+              tunnel-sharing: shared

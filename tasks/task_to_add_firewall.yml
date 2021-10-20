@@ -1,0 +1,22 @@
+- name: Configure IPv4 policies.
+  fmgr_pkg_firewall_policy:
+        bypass_validation: False
+        workspace_locking_adom: "{{adom_name}}"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "{{adom_name}}"
+        pkg: "{{policy_pkg_name}}"
+        state: "{{new_state}}"
+        pkg_firewall_policy:
+          name: "{{fw_rule_name}}"
+          action: "accept"
+          dstaddr: "all"
+          srcaddr: "all"
+          dstintf: "any"
+          srcintf: "any"
+          logtraffic: "utm"
+          service: "ALL"
+          schedule: "always"
+          policyid: 2121
+

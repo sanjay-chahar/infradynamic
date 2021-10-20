@@ -1,0 +1,21 @@
+- name: 'Add VLAN Interface to VDOM'
+  fmgr_generic:
+         method: "{{state}}"
+         params:
+          - url: "/pm/config/device/{{adom_name}}/global/system/interface"
+            data:
+              vdom:
+                - "{{vdom_name}}"
+              allowaccess: 
+                - "ping"
+                - "https"
+                - "ssh"
+              interface:
+                - "{{port_number}}"
+              ip:
+                - "{{ip_addr}}"
+                - "{{netmask}}"      
+              vlanid: "{{vlan_id}}"
+              role: "{{role_name}}"
+              name: "{{interface_name}}"              
+  ignore_errors: True            
