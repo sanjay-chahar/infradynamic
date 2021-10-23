@@ -1,0 +1,30 @@
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+  - name: Script table.
+    fmgr_dvmdb_script:
+        bypass_validation: False
+        workspace_locking_adom: "FWC"
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "FWC"
+        state: present
+        dvmdb_script:
+           content:
+              config system interface
+              edit "port1"
+              set vdom "FWU"
+              set ip 172.20.120.149 255.255.255.0
+              set allowaccess ping https ssh
+           desc: "first script"
+           filter_device: 0
+           name: "sanjay"
+           target: "device_database"
+           type: cli          

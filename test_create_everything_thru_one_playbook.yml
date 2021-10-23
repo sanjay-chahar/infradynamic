@@ -1,4 +1,4 @@
-- hosts: bucks  #kent
+- hosts: herts
   collections:
     - fortinet.fortimanager
   connection: httpapi
