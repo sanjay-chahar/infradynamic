@@ -1,0 +1,22 @@
+EPNFWU02
+=========================================================
+##GEO VDOM
+
+## Create this section using a Device Database script in FMGR UserOrg_FW-U ADOM
+
+config vdom
+
+edit "EPN-GEO_UO"
+config system interface
+        edit "vlk.geo.YYYY"
+        set vdom "EPN-GEO_UO"
+        set ip 172.19.40.sss 255.255.255.252
+        set allowaccess ping
+unset device-identification
+        set role lan
+        set interface "npu0_vlink0"
+        set vlanid 5kkk
+    next
+
+end
+

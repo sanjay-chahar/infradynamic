@@ -1,0 +1,374 @@
+## Create the Policy using a Policy Package or ADOM Database script against newly created blank (using session manager) EP-UO-YYYY_Policy_Master in FMGR UserOrg_FW-U ADOM
+
+##REMOVE UNUSED ADDRESSES e.g. YYYY.net.ntp, YYYY.host.dns2
+config firewall address
+    edit "epn.host.simota.public"
+        set comment "Subnet for SIMOTA Public IP"
+        set subnet 5.181.137.1 255.255.255.255
+    next
+    edit "epn.host.dns.public"
+        set comment "Subnet for CSN DNS IP address"
+        set subnet 5.181.137.2 255.255.255.255
+    next
+    edit "epn.host.ntp1.public"
+        set comment "Subnet for CSN NTP 1 Public IP"
+        set subnet 5.181.137.12 255.255.255.255
+    next
+    edit "epn.host.ntp2.public"
+        set comment "Subnet for CSN NTP 2 Public IP"
+        set subnet 5.181.137.13 255.255.255.255
+    next
+    edit "epn.host.aw.ds.public"
+        set comment "Subnet for CSN Airwatch DS Public IP"
+        set subnet 5.181.137.7 255.255.255.255
+    next
+    edit "epn.host.aw.cm.public"
+        set comment "Subnet for CSN Airwatch CM Public IP"
+        set subnet 5.181.137.8 255.255.255.255
+    next
+    edit "epn.host.rms.portal.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.137.9 255.255.255.255
+    next
+    edit "epn.host.aw.rms.cp1.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.137.10 255.255.255.255
+    next
+    edit "epn.host.aw.rms.cp2.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.137.11 255.255.255.255
+    next
+    edit "eps.host.simota.public"
+        set comment "Subnet for SIMOTA Public IP"
+        set subnet 5.181.138.1 255.255.255.255
+    next
+    edit "eps.host.dns.public"
+        set comment "Subnet for CSN DNS IP address"
+        set subnet 5.181.138.2 255.255.255.255
+    next
+    edit "eps.host.ntp1.public"
+        set comment "Subnet for CSN NTP 1 Public IP"
+        set subnet 5.181.138.12 255.255.255.255
+    next
+    edit "eps.host.ntp2.public"
+        set comment "Subnet for CSN NTP 2 Public IP"
+        set subnet 5.181.138.13 255.255.255.255
+    next
+    edit "eps.host.aw.ds.public"
+        set comment "Subnet for CSN Airwatch DS Public IP"
+        set subnet 5.181.138.7 255.255.255.255
+    next
+    edit "eps.host.aw.cm.public"
+        set comment "Subnet for CSN Airwatch CM Public IP"
+        set subnet 5.181.138.8 255.255.255.255
+    next
+    edit "eps.host.aw.rms.portal.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.138.9 255.255.255.255
+    next
+    edit "eps.host.aw.rms.cp1.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.138.10 255.255.255.255
+    next
+    edit "eps.host.aw.rms.cp2.public"
+        set comment "Subnet for AirWatch RMS Public IP"
+        set subnet 5.181.138.11 255.255.255.255
+    next
+    edit "YYYY.net.apn.pool1"
+        set subnet [UO UE Pool 1]
+    next
+    edit "YYYY.net.apn.pool2"
+        set subnet [UO UE Pool 2]
+    next
+    edit "YYYY.net.msaccess"
+        set subnet 10.0.ggg.128 255.255.255.128
+    next
+    edit "YYYY.net.it1"
+        set subnet 192.168.100.0/24
+    next
+    edit "YYYY.net.it2"
+        set subnet [UO IT Subnet Addresses]
+    next
+    edit "YYYY.net.ipsec"
+        set subnet [UO IT Subnet Addresses]
+    next
+    edit "YYYY.net.ntp"
+        set subnet [UO IT Subnet Addresses]
+    next
+    edit "YYYY.host.dns1"
+        set subnet [UO IT DNS IP Address 1]/32
+    next
+    edit "YYYY.host.dns2"
+        set subnet [UO IT DNS IP Address 2]/32
+    next
+  edit "YYYY.net.ftp1"
+        set subnet 192.168.100.1/32
+    next
+    edit "YYYY.host.dns.msaccess.proxy"
+        set subnet 10.0.ggg.27 255.255.255.255
+    next
+    edit "YYYY.host.dns.epnfwu01.proxy"
+        set subnet 10.0.ggg.25 255.255.255.255
+    next
+    edit "YYYY.host.dns.epnfwu02.proxy"
+        set subnet 10.0.ggg.28 255.255.255.255
+    next
+    edit "YYYY.host.dns.epsfwu01.proxy"
+        set subnet 10.0.ggg.26 255.255.255.255
+    next
+    edit "YYYY.host.dns.epsfwu02.proxy"
+        set subnet 10.0.ggg.29 255.255.255.255
+    next
+en
+
+config firewall addrgrp
+    edit "epn.grp.csn.public"
+        set member "epn.host.simota.public" "epn.host.rms.portal.public" "epn.host.aw.rms.cp1.public" "epn.host.aw.rms.cp2.public" "epn.host.ntp1.public" "epn.host.ntp2.public" "epn.host.aw.ds.public" "epn.host.aw.cm.public" "epn.host.dns.public"
+    next
+    edit "eps.grp.csn.public"
+        set member "eps.host.simota.public" "eps.host.aw.rms.portal.public" "eps.host.aw.rms.cp1.public" "eps.host.aw.rms.cp2.public" "eps.host.ntp1.public" "eps.host.ntp2.public" "eps.host.aw.ds.public" "eps.host.aw.cm.public" "eps.host.dns.public"
+    next
+    edit "YYYY.grp.apn.pool"
+        set member "YYYY.net.apn.pool1" "YYYY.net.apn.pool2"
+    next
+    edit YYYY.grp.dns.epfwu.proxy
+        set member "YYYY.host.dns.epnfwu01.proxy" "YYYY.host.dns.epnfwu02.proxy" "YYYY.host.dns.epsfwu01.proxy" "YYYY.host.dns.epsfwu02.proxy"
+next
+##REMOVE "YYYY.host.dns2" IF NOT PRESENT
+    edit "YYYY.grp.dns"
+set member "YYYY.host.dns1" "YYYY.host.dns2"
+ne
+end
+
+config firewall service custom
+    edit "tcp.443.aw.rms"
+        set comment "Airwatch RMS Service"
+        set tcp-portrange 443
+    next
+    edit "tcp.10174.simota"
+        set comment "SIMOTA Service"
+        set tcp-portrange 10174
+    next
+    edit "tcp.2001.aw.cm"
+        set comment "Airwatch CM Service"
+        set tcp-portrange 2001
+    next
+end
+
+##UNREM UO NTP RULES IF PROVIDED
+config firewall policy
+    edit 0
+        set srcintf "zone.geo.YYYY"
+        set dstintf "zone.epc.YYYY"
+        set srcaddr "YYYY.net.msaccess"
+        set dstaddr "YYYY.net.msaccess"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+    next
+    edit 0
+        set srcintf "zone.epc.YYYY"
+        set dstintf "zone.geo.YYYY"
+        set srcaddr "YYYY.net.msaccess"
+        set dstaddr "YYYY.net.msaccess"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+        set tcp-mss-sender 1366
+    next
+    edit 0
+        set srcintf "zone.epc.YYYY" "zone.geo.YYYY"
+        set dstintf "zone.mfw.YYYY"
+        set srcaddr "YYYY.grp.dns.epfwu.proxy"
+        set dstaddr "YYYY.grp.dns"
+        set action accept
+        set schedule "always"
+        set service "DNS"
+        set tcp-mss-sender 1366
+        set comments "Access to DNS Server"
+    next
+    edit 0
+        set srcintf "zone.epc.YYYY"
+        set dstintf "zone.geo.YYYY"
+        set srcaddr "YYYY.grp.dns.epfwu.proxy"
+        set dstaddr "YYYY.grp.dns"
+        set action accept
+        set schedule "always"
+        set service "DNS"
+        set tcp-mss-sender 1366
+        set comments "Access to DNS Server"
+    next
+    edit 0
+        set srcintf "zone.epc.YYYY"
+        set dstintf "lb.epc.YYYY"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "YYYY.host.dns.msaccess.proxy"
+        set action accept
+        set schedule "always"
+        set service "PING" "DNS"
+        set comments "DNS to DNS Proxy LB address"
+    next
+    edit 0
+        set srcintf "zone.epc.YYYY"
+        set dstintf "zone.geo.YYYY" "vlk.YYYY.csnag"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "epn.grp.csn.public" "eps.grp.csn.public"
+        set action accept
+        set schedule "always"
+        set service "NTP" "tcp.2001.aw.cm" "tcp.10174.simota" "DNS" "HTTPS"
+        set tcp-mss-sender 1366
+    next
+    edit 0
+        set srcintf "zone.geo.YYYY"
+        set dstintf "vlk.YYYY.csnag"
+        set srcaddr "YYYY.grp.apn.pool" "YYYY.grp.dns.epfwu.proxy"
+        set dstaddr "epn.grp.csn.public" "eps.grp.csn.public"
+        set action accept
+        set schedule "always"
+        set service "NTP" "tcp.2001.aw.cm" "tcp.10174.simota" "DNS" "HTTPS"
+    next
+edit 0
+        set srcintf "zone.epc.YYYY"
+        set dstintf "zone.geo.YYYY"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "YYYY.net.ftp1"
+        set action accept
+        set schedule "always"
+        set service FTP
+ne
+edit 0
+        set srcintf "zone.epc.YYYY" "zone.geo.YYYY"
+        set dstintf "zone.mfw.YYYY"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "YYYY.net.ftp1"
+        set action accept
+        set schedule "always"
+        set service FTP
+ne
+#edit 0
+#        set srcintf "zone.epc.YYYY"
+#        set dstintf "zone.geo.YYYY"
+#        set srcaddr "YYYY.grp.apn.pool"
+#        set dstaddr "YYYY.net.ntp"
+#        set action accept
+#        set schedule "always"
+#        set service NTP
+#ne
+#edit 0
+#        set srcintf "zone.epc.YYYY" "zone.geo.YYYY"
+#        set dstintf "zone.mfw.YYYY"
+#        set srcaddr "YYYY.grp.apn.pool"
+#        set dstaddr "YYYY.net.ntp"
+#        set action accept
+#        set schedule "always"
+#        set service NTP
+#ne
+    edit 101
+        set srcintf "zone.epc.YYYY"
+        set dstintf "zone.geo.YYYY"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+    next
+    edit 102
+        set srcintf "zone.epc.YYYY" "zone.geo.YYYY"
+        set dstintf "zone.mfw.YYYY"
+        set srcaddr "YYYY.grp.apn.pool"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+    next
+end
+
+config firewall DoS-policy
+    edit 1
+        set interface "zone.epc.YYYY"
+        set srcaddr "all"
+        set dstaddr "all"
+        set service "ALL"
+        config anomaly
+            edit "tcp_syn_flood"
+                set status enable
+                set log enable
+                set action block
+                set threshold 2000
+            next
+            edit "tcp_port_scan"
+                set status enable
+                set log enable
+                set action block
+                set threshold 1000
+            next
+            edit "tcp_src_session"
+                set status enable
+                set log enable
+                set action block
+                set threshold 5000
+            next
+            edit "tcp_dst_session"
+                set status enable
+                set log enable
+                set action block
+                set threshold 5000
+            next
+            edit "udp_flood"
+                set threshold 2000
+            next
+            edit "udp_scan"
+                set threshold 2000
+            next
+            edit "udp_src_session"
+                set threshold 5000
+            next
+            edit "udp_dst_session"
+                set threshold 5000
+            next
+            edit "icmp_flood"
+                set status enable
+                set log enable
+                set action block
+                set threshold 250
+            next
+            edit "icmp_sweep"
+                set status enable
+                set log enable
+                set action block
+                set threshold 100
+            next
+            edit "icmp_src_session"
+                set status enable
+                set log enable
+                set action block
+                set threshold 300
+            next
+            edit "icmp_dst_session"
+                set status enable
+                set log enable
+                set action block
+                set threshold 1000
+            next
+            edit "ip_src_session"
+                set threshold 5000
+            next
+            edit "ip_dst_session"
+                set threshold 5000
+            next
+            edit "sctp_flood"
+                set threshold 2000
+            next
+            edit "sctp_scan"
+                set threshold 1000
+            next
+            edit "sctp_src_session"
+                set threshold 5000
+            next
+            edit "sctp_dst_session"
+                set threshold 5000
+            next
+        end
+    next
+end
+

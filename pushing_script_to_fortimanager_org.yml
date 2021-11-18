@@ -6,12 +6,13 @@
      ansible_httpapi_use_ssl: True
      ansible_httpapi_validate_certs: False
      ansible_httpapi_port: 443
-     #source_template: "{{ lookup('file', 'templates/switch-config.j2') }}"
-     source_template: templates/switch-config.j2
+     source_template: "{{ lookup('file', 'templates/switch-config.j2') }}"
 
   tasks:
 
   - debug: var=source_template   
+    tags:
+      - test    
   - name: Script table.
     fmgr_dvmdb_script:
         bypass_validation: False

@@ -1,0 +1,25 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+     adom_name: FWC
+     vdom_name: my-vdom
+
+  tasks:
+  - name: 'get the submit session id'
+    fmgr_generic:
+         method: "get"
+         params:
+          - url: "/dvmdb/adom/FWC/workflow"
+            #verbose: 1
+    register: command_output 
+
+  - name: display out
+    debug: 
+      var: command_output
+

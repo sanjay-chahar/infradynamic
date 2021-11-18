@@ -1,0 +1,42 @@
+##EPNAN + EPSAN
+
+interface Vlan 30xx
+ description EPC_YYYY_1
+!
+interface Vlan 35xx
+ description EPC_YYYY_2
+!
+
+
+interface Port-channel 21
+ switchport trunk allowed vlan add 30xx
+!
+interface Port-channel 22
+ switchport trunk allowed vlan add 35xx
+!
+interface TenGigabitEthernet 202/0/10:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 201/0/10:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 201/0/11:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 202/0/11:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 202/0/13:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 201/0/13:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 201/0/14:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+interface TenGigabitEthernet 202/0/14:1
+ switchport trunk allowed vlan add 30xx,35xx
+!
+
+

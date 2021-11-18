@@ -1,0 +1,25 @@
+##  Create the Policy using a Policy Package or ADOM Database script against EP-SGi01_Policy_Master in FMGR Signalling_FW-S ADOM
+
+config firewall policy
+    edit 0
+        set srcintf "vlan.YYYY.epc"
+        set dstintf "vlan.YYYY.fab"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+    next
+    edit 0
+        set srcintf "vlan.YYYY.fab"
+        set dstintf "vlan.YYYY.epc"
+        set srcaddr "all"
+        set dstaddr "all"
+        set action accept
+        set schedule "always"
+        set service "ALL"
+    next
+end
+
+
+

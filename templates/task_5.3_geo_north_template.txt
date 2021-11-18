@@ -1,0 +1,117 @@
+
+## Create these using a Policy Package or ADOM Database script against EP-GEO-UO_Policy_Master in FMGR UserOrg_FW-U ADOM
+
+config firewall address
+
+edit "YYYY.net.geo.uo.vlan"
+config dynamic_mapping
+edit "EPNFWU02"-"EPN-GEO_UO"
+set subnet 172.19.40.hhh 255.255.255.252
+next
+edit "EPSFWU01"-"EPS-GEO_UO"
+set subnet 172.20.8.hhh 255.255.255.252
+next
+edit "EPSFWU02"-"EPS-GEO_UO"
+set subnet 172.20.40.hhh 255.255.255.252
+next
+edit "EPNFWU01"-"EPN-GEO_UO"
+set subnet 172.19.8.hhh 255.255.255.252
+next
+end
+
+next
+
+edit "YYYY.host.geo.remote"
+config dynamic_mapping
+edit "EPNFWU02"-"EPN-GEO_UO"
+set subnet 10.151.134.kkk 255.255.255.255
+next
+edit "EPSFWU01"-"EPS-GEO_UO"
+set subnet 10.150.132.kkk 255.255.255.255
+next
+edit "EPSFWU02"-"EPS-GEO_UO"
+set subnet 10.150.134.kkk 255.255.255.255
+next
+edit "EPNFWU01"-"EPN-GEO_UO"
+set subnet 10.151.132.kkk 255.255.255.255
+next
+end
+
+next
+
+end
+
+
+config firewall ippool
+edit "YYYY.ippool.geo.extip"
+set startip 10.150.132.kkk
+set endip 10.150.132.kkk
+config dynamic_mapping
+edit "EPNFWU02"-"EPN-GEO_UO"
+set startip 10.150.134.kkk
+set endip 10.150.134.kkk
+next
+edit "EPSFWU02"-"EPS-GEO_UO"
+set startip 10.151.134.kkk
+set endip 10.151.134.kkk
+next
+edit "EPSFWU01"-"EPS-GEO_UO"
+set startip 10.151.132.kkk
+set endip 10.151.132.kkk
+next
+end
+
+next
+
+end
+
+config firewall vip
+edit "YYYY.vip.geo.uo"
+set extip 10.150.132.kkk
+set extintf "any"
+set mappedip "172.19.8.ttt"
+config dynamic_mapping
+edit "EPNFWU02"-"EPN-GEO_UO"
+set extintf "any"
+set extip 10.150.134.kkk
+set mappedip 172.19.40.ttt
+next
+edit "EPSFWU02"-"EPS-GEO_UO"
+set extintf "any"
+set extip 10.151.134.kkk
+set mappedip 172.20.40.ttt
+next
+edit "EPSFWU01"-"EPS-GEO_UO"
+set extintf "any"
+set extip 10.151.132.kkk
+set mappedip 172.20.8.ttt
+next
+end
+
+next
+
+end
+
+config firewall policy
+    edit 0
+        set srcintf "1409-SECGEO1" "1410-SECGEO2"
+        set dstintf "vlk.geo.YYYY"
+        set srcaddr "YYYY.host.geo.remote"
+        set dstaddr "YYYY.vip.geo.uo"
+        set action accept
+        set schedule "always"
+        set service "AH" "ESP" "IKE" "PING"
+    next
+    edit 0
+        set srcintf "vlk.geo.YYYY"
+        set dstintf "1409-SECGEO1" "1410-SECGEO2"
+        set srcaddr "YYYY.net.geo.uo.vlan"
+        set dstaddr "YYYY.host.geo.remote"
+        set action accept
+        set schedule "always"
+        set service "AH" "ESP" "IKE" "PING"
+        set nat enable
+        set ippool enable
+        set poolname "YYYY.ippool.geo.extip"
+    next
+en

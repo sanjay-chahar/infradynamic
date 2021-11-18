@@ -1,0 +1,30 @@
+EPSFWU01
+=========================================================
+##CSNAG VDOM
+
+## Create this section using a Device Database script in FMGR UserOrg_FW-U ADOM
+
+config vdom
+edit "EPS-CSNAG01"
+config system interface
+    edit "vlk.csnag.YYYY"
+        set vdom "EPS-CSNAG01"
+        set ip 10.151.192.ttt 255.255.255.252
+        set allowaccess ping
+unset device-identification
+        set interface "npu0_vlink0"
+        set vlanid 15kkk
+    next
+end
+
+config router bgp
+ config neighbor
+    edit "10.151.192.sss"
+            set advertisement-interval 1
+            set remote-as 4259843zzz
+            set route-map-out "ESN-CSN-to-UO"
+set description "YYYY UO CSN Peer"
+set password "1teadmin!YYYY"
+        next
+en
+en

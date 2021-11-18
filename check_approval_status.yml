@@ -1,0 +1,39 @@
+---
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+     adom_name: FWC
+     vdom_name: my-vdom
+
+  tasks:
+  - name: 'get the submit session id'
+    fmgr_generic:
+         method: "get"
+         params:
+          - url: "dvmdb/adom/FWC/workflow"
+            #verbose: 1
+    register: status_output 
+
+  # - name: display out
+  #   debug: 
+  #     var: status_output
+
+
+  # - name: display jason
+  #   debug: 
+  #     msg: "{{ status_output.json | list }}""
+
+  
+  - set_fact: session_id="{{ status_output.json | json_query(jmesquery) }}"    #from_json | json_query('changed.response_data.sessionid') }}"
+     # session_id: "{{ status_output.json | jason_query('meta.response_data.sessionid') }}
+  - name: display out   
+    debug: 
+      jmesquery: "[*].sessionid"
+      
+      
+      

@@ -1,0 +1,27 @@
+EPNFWU01
+
+## Create Normalized Interfaces using a Policy Package or ADOM Database script against EP-CSNAG01_Policy_Master in FMGR UserOrg_FW-U ADOM
+
+
+config dynamic interface
+edit "vlk.csnag.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-CSNAG01"
+set local-intf "vlk.csnag.YYYY"
+next
+edit "EPNFWU02"-"EPN-CSNAG01"
+set local-intf "vlk.csnag.YYYY"
+next
+edit "EPSFWU01"-"EPS-CSNAG01"
+set local-intf "vlk.csnag.YYYY"
+next
+edit "EPSFWU02"-"EPS-CSNAG01"
+set local-intf "vlk.csnag.YYYY"
+next
+end
+
+next
+
+end
+

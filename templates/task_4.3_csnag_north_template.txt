@@ -1,0 +1,20 @@
+EPNFWU01
+
+## Create using a Policy Package or ADOM Database script against EP-CSNAG01_Policy_Master in FMGR UserOrg_FW-U ADOM
+
+config firewall address
+    edit "YYYY.net.apn.pool1"
+        set subnet [UO UE Pool 1]
+    next
+    edit "YYYY.net.apn.pool2"
+        set subnet [UO UE Pool 2]
+    next
+en
+
+config firewall addrgrp
+    edit "UO_APN_POOL_GROUP1"
+        append member "YYYY.net.apn.pool1" "YYYY.net.apn.pool2"
+    next
+ end
+
+## Run install wizard to update the policy afterwards

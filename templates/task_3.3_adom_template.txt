@@ -1,0 +1,44 @@
+
+## Normalized Interfaces have to be created in Policy & Objects manually at present and this has to be done prior to creating the actual policy
+
+config dynamic interface
+edit "vlan.YYYY.epc"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWS01"-"EPN-SGi01"
+set local-intf "vlan.YYYY.epc"
+next
+edit "EPNFWS02"-"EPN-SGi01"
+set local-intf "vlan.YYYY.epc"
+next
+edit "EPSFWS01"-"EPS-SGi01"
+set local-intf "vlan.YYYY.epc"
+next
+edit "EPSFWS02"-"EPS-SGi01"
+set local-intf "vlan.YYYY.epc"
+next
+end
+
+next
+
+edit "vlan.YYYY.fab"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWS01"-"EPN-SGi01"
+set local-intf "vlan.YYYY.fab"
+next
+edit "EPNFWS02"-"EPN-SGi01"
+set local-intf "vlan.YYYY.fab"
+next
+edit "EPSFWS01"-"EPS-SGi01"
+set local-intf "vlan.YYYY.fab"
+next
+edit "EPSFWS02"-"EPS-SGi01"
+set local-intf "vlan.YYYY.fab"
+next
+end
+
+next
+
+end
+

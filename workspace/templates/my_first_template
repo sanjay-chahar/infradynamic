@@ -1,0 +1,41 @@
+con v
+edit  "present"
+
+ config firewall address
+    edit "herts"
+        set comment "Subnet for YYYY APN POOL 1"
+        set subnet [UO UE Pool 1]
+    next
+    edit "YYYY_APN_POOL_2"
+        set comment "Subnet for YYYY APN POOL 2"
+        set subnet [FWU]
+    next
+end
+
+config firewall addrgrp
+edit "abc-dom"
+append member "abc-dom" "abc-dom"
+next
+en
+
+=======================================================
+
+con v
+edit  "abc-dom"
+ 
+config firewall address
+    edit "YYYY_APN_POOL_1"
+        set comment "Subnet for YYYY APN POOL 1"
+        set subn [abc-dom]
+    next
+    edit "abc-dom"
+        set comment "Subnet for YYYY APN POOL 2"
+        set subnet [UO UE Pool 2]
+    next
+end
+
+config firewall addrgrp
+edit "UO_APN_POOL_GROUP1"
+append member "YYYY_APN_POOL_1" "YYYY_APN_POOL_2"
+next
+en

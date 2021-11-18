@@ -1,0 +1,28 @@
+######   EPNFWS02  
+
+##  Create the VLAN interfaces using a Device Database script in FMGR Signalling_FW-S ADOM
+
+config vdom
+edit EPN-SGi01
+
+config system interface
+    edit "vlan.YYYY.epc"
+        set vdom "EPN-SGi01"
+        set forward-domain 35xx
+        set description "YYYY APN VLAN side 02"
+        set role lan        
+        set interface "EPC_LAG"
+        unset device-identification
+        set vlanid 35xx
+    next
+    edit "vlan.YYYY.fab"
+        set vdom "EPN-SGi01"
+        set forward-domain 35xx
+        set description "YYYY APN VLAN side 02"
+        set role lan        
+        set interface "Fabric_LAG"
+        unset device-identification
+        set vlanid 35xx
+    next
+end
+

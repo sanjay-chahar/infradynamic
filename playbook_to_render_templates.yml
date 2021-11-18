@@ -1,0 +1,7 @@
+- hosts: herts
+
+  tasks:
+   - name: Device VDOM table.
+     import_tasks: tasks/task_to_add_vdom.yml
+   
+

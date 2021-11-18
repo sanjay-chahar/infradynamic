@@ -1,0 +1,17 @@
+- hosts: fortimanagers
+  gather_facts: false
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+
+  vars:
+    ansible_user: "{{var_fortimanager_username}}"
+    ansible_password: "{{var_fortimanager_password}}"
+  tasks:
+
+# # Task 3.18
+# # --------
+# #Validate VLAN Interface Configuration has been deployed to EPNFWS02
+# ##################
+# # PLACEHOLDER
+# ##################

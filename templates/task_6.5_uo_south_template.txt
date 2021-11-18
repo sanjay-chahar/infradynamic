@@ -1,0 +1,491 @@
+EPSFWU01
+=========================================================
+YYYY VDOM
+=========================================================
+*********************************************
+## Create this section using a Device Database script in FMGR UserOrg_FW-U ADOM
+
+config vdom
+edit "EPS-UO-YYYY"
+
+config user peer
+    edit "epnfwu01.vpn.motorolasolutions.com"
+        set ca "G_CA_Cert_4"
+        set subject "epnfwu01.vpn.motorolasolutions.com"
+    next
+end
+
+config system interface
+    edit "vlk.YYYY.csnag"
+        set vdom "EPS-UO-YYYY"
+        set ip 10.151.192.sss 255.255.255.252
+        set allowaccess ping
+        unset device-identification
+        set interface "npu0_vlink1"
+        set vlanid 15kkk
+    next
+
+edit "vlan.mfw.YYYY"
+set vdom "EPS-UO-YYYY"
+set ip 10.0.ggg.41 255.255.255.252
+set allowaccess ping
+unset device-identification
+set interface "MFW-Red"
+set vlanid 20vvv
+next
+    edit "vlk.YYYY.geo"
+        set vdom "EPS-UO-YYYY"
+        set ip 172.20.8.ttt 255.255.255.252
+        set allowaccess ping
+        unset device-identification
+        set role lan
+        set interface "npu0_vlink1"
+        set vlanid 5kkk
+    next
+    edit "vlan.epc.YYYY"
+        set vdom "EPS-UO-YYYY"
+        set ip 10.0.ggg.65 255.255.255.252
+        set allowaccess ping
+        set bfd enable
+        set bfd-desired-min-tx 100
+        set bfd-required-min-rx 100
+        set vlanforward enable
+        unset device-identification
+        set role lan
+        set interface "AccSpine-red"
+        set vlanid 30xx
+    next
+    edit "vlan.peer.YYYY"
+        set vdom "EPS-UO-YYYY"
+        set ip 172.20.16.ttt 255.255.255.252
+        set allowaccess ping
+        unset device-identification
+        set role lan
+        set interface "INTERFW_LAG"
+        set vlanid 10kkk
+    next
+    edit "lb.epc.YYYY"
+        set vdom "EPS-UO-YYYY"
+        set ip 10.0.ggg.27 255.255.255.255
+        set type loopback
+        set description "Loopback Interface DNS Proxy"
+        next
+    edit "lb.uo.YYYY"
+        set vdom "EPS-UO-YYYY"
+        set ip 10.0.ggg.26 255.255.255.255
+        set type loopback
+        set description "Loopback Interface DNS Proxy Source"
+    next
+
+end
+
+
+config vpn ipsec phase1-interface
+    edit "vpn.geo.uo.YYYY"
+        set interface "vlk.YYYY.geo"
+        set ike-version 2
+        set local-gw 172.20.8.ttt
+        set keylife 86400
+        set authmethod signature
+        set proposal aes128gcm-prfsha256
+        set dhgrp 14
+        set remote-gw 10.150.132.kkk
+        set certificate "epsfwu01.vpn.motorolasolutions.com"
+        set peer "epnfwu01.vpn.motorolasolutions.com"
+    next
+end
+
+config vpn ipsec phase2-interface
+    edit "vpn.geo.uo.YYYY"
+        set phase1name "vpn.geo.uo.YYYY"
+        set proposal aes128gcm
+        set pfs disable
+        set auto-negotiate enable
+        set keylifeseconds 28800
+    next
+end
+
+config system interface
+edit "vpn.geo.uo.YYYY"
+        set ip 10.0.ggg.18 255.255.255.255
+        set allowaccess ping
+        set bfd enable
+        set remote-ip 10.0.ggg.17 255.255.255.255
+next
+end
+
+config system settings
+    set bfd enable
+set bfd-desired-min-tx 200
+set bfd-required-min-rx 200
+set bfd-detect-mult 4
+end
+
+config system vdom-dns
+    set vdom-dns enable
+    set primary [UO IT DNS IP Address 1]
+#IF APPLICABLE
+#set secondary [UO IT DNS IP Address 2]
+    set source-ip 10.0.ggg.26
+end
+
+config system zone
+    edit "zone.epc.YYYY"
+        set interface "vlan.epc.YYYY"
+    next
+    edit "zone.mfw.YYYY"
+        set interface "vlan.mfw.YYYY"
+    next
+    edit "zone.geo.YYYY"
+        set intrazone allow
+        set interface "vpn.geo.uo.YYYY" "vlan.peer.YYYY" 
+    next
+end
+
+
+config system dns-database
+    edit "udm.esn.gov.uk"
+        set domain "udm.esn.gov.uk"
+        set ttl 30
+        set authoritative disable
+        set forwarder "5.181.138.2" "5.181.137.2" 
+    next
+ edit "time.esn.gov.uk"
+        set domain "time.esn.gov.uk"
+        set ttl 30
+        set authoritative disable
+        set forwarder "5.181.138.2" "5.181.137.2" 
+    next
+    edit "pool.ntp.org"
+        set domain "pool.ntp.org"
+        set ttl 30
+        set authoritative disable
+        set forwarder "5.181.138.2" "5.181.137.2" 
+    next
+    edit "time-ios.apple.com"
+        set domain "time-ios.apple.com"
+        set ttl 30
+        set authoritative disable
+        set forwarder "5.181.138.2" "5.181.137.2" 
+    next
+    edit "time.android.com"
+        set domain "time.android.com"
+        set ttl 30
+        set authoritative disable
+        set forwarder "5.181.138.2" "5.181.137.2" 
+    next
+end
+config system dns-server
+    edit "lb.epc.YYYY"
+    next
+    edit "vlan.epc.YYYY"
+    next
+    edit "vlan.peer.YYYY"
+    next
+end
+
+config log setting
+    set fwpolicy-implicit-log enable
+end
+
+config router prefix-list
+    edit "prefix.wanout.esn.YYYY"
+        config rule
+            edit 1
+                set prefix [UO UE Pool 1]
+                unset ge
+                unset le
+            next
+            edit 2
+                set prefix [UO UE Pool 2]
+                unset ge
+                unset le
+            next
+            edit 3
+                set prefix 10.0.ggg.25 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 4
+                set prefix 10.0.ggg.26 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 5
+                set prefix 10.0.ggg.28 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 6
+                set prefix 10.0.ggg.29 255.255.255.255
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.wanin.esn.YYYY"
+        config rule
+            edit 0
+                set prefix 192.168.100.0 255.255.255.0
+                unset ge
+                unset le
+            next
+## ADD A RULE FOR EACH SUBNET INCLUDING MASK
+            edit 0
+                set prefix 0.0.0.0 0.0.0.0
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.epcin.esn.YYYY"
+        config rule
+            edit 1
+                set prefix [UO UE Pool 1]
+                unset ge
+                unset le
+            next
+            edit 2
+                set prefix [UO UE Pool 2]
+                unset ge
+                unset le
+            next
+            edit 3
+                set prefix 10.0.ggg.128 255.255.255.128
+                unset ge
+                set le 32
+            next
+        end
+    next
+    edit "prefix.eps.netred.YYYY"
+        config rule
+            edit 1
+                set prefix 10.151.42.32 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 2
+                set prefix 10.151.42.33 255.255.255.255
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.esn.uo.net"
+        config rule
+            edit 1
+                set prefix any
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.esn.YYYY"
+        config rule
+            edit 1
+                set prefix [UO UE Pool 1]
+                unset ge
+                unset le
+            next
+            edit 2
+                set prefix [UO UE Pool 2]
+                unset ge
+                unset le
+            next
+            edit 3
+                set prefix 10.0.ggg.25 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 4
+                set prefix 10.0.ggg.28 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 5
+                set prefix 10.0.ggg.26 255.255.255.255
+                unset ge
+                unset le
+            next
+            edit 6
+                set prefix 10.0.ggg.29 255.255.255.255
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.epn.csn.public"
+        config rule
+            edit 1
+                set prefix 5.181.137.0 255.255.255.192
+                unset ge
+                unset le
+            next
+        end
+    next
+    edit "prefix.eps.csn.public"
+        config rule
+            edit 1
+                set prefix 5.181.138.0 255.255.255.192
+                unset ge
+                unset le
+            next
+        end
+    next
+end
+
+config router route-map
+    edit "rtemap.YYYY.wanout"
+        config rule
+            edit 1
+                set match-ip-address "prefix.wanout.esn.YYYY"
+                set set-metric 100
+            next
+        end
+    next
+    edit "rtemap.YYYY.wanin"
+        config rule
+            edit 1
+                set action deny
+                set match-ip-address "prefix.wanout.esn.YYYY"
+            next
+            edit 2
+                set match-ip-address "prefix.wanin.esn.YYYY"
+                set set-local-preference 300
+            next
+        end
+    next
+    edit "rtemap.YYYY.epcin"
+        config rule
+            edit 1
+                set match-ip-address "prefix.epcin.esn.YYYY"
+            next
+            edit 2
+                set match-ip-address "prefix.eps.netred.YYYY"
+            next
+        end
+    next
+ edit "rtemap.eps.sbfix"
+        config rule
+            edit 1
+                set match-ip-address "prefix.eps.netred.YYYY"
+            next
+        end
+    next
+    edit "rtemap.geo.pfxout"
+        config rule
+            edit 1
+                set match-ip-address "prefix.esn.uo.net"
+            next
+        end
+    next
+    edit "rtemap.geo.pfxin"
+        config rule
+            edit 1
+                set set-metric 100
+            next
+        end
+    next
+    edit "rtemap.peer.pfxout"
+        config rule
+            edit 1
+                set match-ip-address "prefix.esn.uo.net"
+            next
+        end
+    next
+    edit "rtemap.csnag.pfxout"
+        config rule
+            edit 1
+                set match-ip-address "prefix.esn.YYYY"
+            next
+        end
+    next
+    edit "rtemap.csnag.pfxin"
+        config rule
+            edit 1
+                set match-ip-address "prefix.eps.csn.public"
+                set set-local-preference 300
+            next
+            edit 2
+                set match-ip-address "prefix.epn.csn.public"
+            next
+        end
+    next
+end
+
+config router static
+    edit 0
+        set dst 10.150.132.kkk 255.255.255.255
+        set gateway 172.20.8.sss
+        set device "vlk.YYYY.geo"
+    next
+end
+
+config router bgp
+    set as 4259843zzz
+    set router-id 10.0.ggg.65
+    config neighbor
+        edit "10.0.ggg.66"
+            set advertisement-interval 1
+            set bfd enable
+            set remote-as 4259841zzz
+            set route-map-in "rtemap.YYYY.epcin"
+            set password "[UODirect BGP Password]"
+        next
+        edit "10.0.ggg.17"
+            set advertisement-interval 1
+            set bfd enable
+            set remote-as 4259842zzz
+            set route-map-in "rtemap.geo.pfxin"
+            set route-map-out "rtemap.geo.pfxout"
+set password "1teadmin!YYYY"
+            config conditional-advertise
+                edit "rtemap.geo.pfxout"
+                    set condition-routemap "rtemap.eps.sbfix"
+                next
+            end
+        next
+        edit "10.0.ggg.42"
+            set advertisement-interval 1
+            set bfd enable
+            set remote-as 4259850zzz
+            set route-map-in "rtemap.YYYY.wanin"
+            set route-map-out "rtemap.YYYY.wanout"
+            set password "[UODirect BGP Password]"
+            config conditional-advertise
+                edit "rtemap.YYYY.wanout"
+                    set condition-routemap "rtemap.eps.sbfix"
+                next
+            end
+        next
+        edit "172.20.16.sss"
+            set advertisement-interval 1
+            set bfd enable
+            set next-hop-self enable
+            set remote-as 4259843zzz
+            set route-map-out "rtemap.peer.pfxout"
+set password "1teadmin!YYYY"
+            set update-source "vlan.peer.YYYY"
+            config conditional-advertise
+                edit "rtemap.peer.pfxout"
+                    set condition-routemap "rtemap.eps.sbfix"
+                next
+            end
+        next
+        edit "10.151.192.ttt"
+            set advertisement-interval 1
+            set remote-as 4294967291
+            set route-map-in "rtemap.csnag.pfxin"
+            set route-map-out "rtemap.csnag.pfxout"
+set password "1teadmin!YYYY"
+        next
+    end
+    config network
+        edit 1
+            set prefix 10.0.ggg.27 255.255.255.255
+        next
+        edit 2
+            set prefix 10.0.ggg.26 255.255.255.255
+        next
+    end
+en

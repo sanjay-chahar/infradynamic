@@ -1,0 +1,138 @@
+## Create Normalized Interfaces using a Policy Package or ADOM Database script against newly created EM-UO-YYYY_Policy_Master in FMGR UserOrg_FW-U ADOM
+
+config dynamic interface
+edit "vlk.YYYY.csnag"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "vlk.YYYY.csnag"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "vlk.YYYY.csnag"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "vlk.YYYY.csnag"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "vlk.YYYY.csnag"
+next
+end
+
+next
+
+edit "vlk.YYYY.geo"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "vlk.YYYY.geo"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "vlk.YYYY.geo"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "vlk.YYYY.geo"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "vlk.YYYY.geo"
+next
+end
+
+next
+
+edit "lb.epc.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "lb.epc.YYYY"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "lb.epc.YYYY"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "lb.epc.YYYY"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "lb.epc.YYYY"
+next
+end
+
+next
+
+edit "lb.uo.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "lb.uo.YYYY"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "lb.uo.YYYY"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "lb.uo.YYYY"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "lb.uo.YYYY"
+next
+end
+
+next
+
+edit "zone.epc.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "zone.epc.YYYY"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "zone.epc.YYYY"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "zone.epc.YYYY"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "zone.epc.YYYY"
+next
+end
+
+next
+
+edit "zone.geo.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "zone.geo.YYYY"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "zone.geo.YYYY"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "zone.geo.YYYY"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "zone.geo.YYYY"
+next
+end
+
+next
+
+edit "zone.mfw.YYYY"
+set default-mapping disable
+config dynamic_mapping
+edit "EPNFWU01"-"EPN-UO-YYYY"
+set local-intf "zone.mfw.YYYY"
+next
+edit "EPNFWU02"-"EPN-UO-YYYY"
+set local-intf "zone.mfw.YYYY"
+next
+edit "EPSFWU01"-"EPS-UO-YYYY"
+set local-intf "zone.mfw.YYYY"
+next
+edit "EPSFWU02"-"EPS-UO-YYYY"
+set local-intf "zone.mfw.YYYY"
+next
+end
+
+next
+end
+
+

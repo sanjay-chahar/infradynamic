@@ -11,4 +11,18 @@ port_number: "port6"
 ip_addr: "192.168.5.100"        
 netmask: "255.255.255.0"       
 role_name: "lan"            
-vlan_id: "2205"            
+vlan_id: "2205" 
+
+switch-config-j2:
+    CSNAG VDOM
+    con v
+    edit "ERB-CSNAG01"
+    config system interface
+       edit "CSN-YYYY_0"
+          set vdom "ERB-CSNAG01"
+          set ip 10.153.200.ttt 255.255.255.252
+          set allowaccess ping
+    unset device-identification
+        set interface "npu0_vlink0"
+        set vlanid 15kkk
+           

@@ -1,0 +1,28 @@
+- hosts: fortimanagers
+  collections:
+    - fortinet.fortimanager
+  connection: httpapi
+  vars:
+     ansible_httpapi_use_ssl: True
+     ansible_httpapi_validate_certs: False
+     ansible_httpapi_port: 443
+  tasks:
+   - name: no description
+     fmgr_dvmdb_workflow_approve:
+        bypass_validation: False
+        workspace_locking_adom: FWC
+        workspace_locking_timeout: 300
+        rc_succeeded: 0
+        rc_failed: -2
+        adom: "FWC"
+        session_id: "4"
+        dvmdb_workflow_approve:
+                desc: "sanjay"
+
+
+ 
+             
+            
+
+
+

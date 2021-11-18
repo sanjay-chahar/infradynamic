@@ -1,0 +1,8 @@
+- switch-configi_j2  
+  CSNAG VDOM
+  con v
+  edit "ERB-CSNAG01"
+  config system interface
+     edit "CSN-YYYY_0"
+        set vdom "ERB-CSNAG01"
+        set ip 10.153.200.ttt 255.255.255.252

@@ -1,0 +1,16 @@
+{% raw %}ERBFWU02 {% endraw %}
+
+{% raw %}CSNAG VDOM {% endraw %}
+{% raw %}con v {% endraw %}
+edit "ERB-CSNAG01"
+config system interface
+    edit "CSN-YYYY_0"
+        set vdom "ERB-CSNAG01"
+        set ip 10.153.200.ttt 255.255.255.252
+        set allowaccess ping
+unset device-identification
+        set interface "npu0_vlink0"
+        set vlanid 15kkk
+    next
+end
+{% endraw %}
