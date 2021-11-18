@@ -7,7 +7,7 @@
      ansible_httpapi_use_ssl: True
      ansible_httpapi_validate_certs: False
      ansible_httpapi_port: 443
-     adom_name: FWC
+     adom_name: "EPNFWS01"
      vdom_name: my-vdom
 
   tasks:
@@ -15,25 +15,29 @@
     fmgr_generic:
          method: "get"
          params:
-          - url: "/dvmdb/device/FWC"
+          - url: "/dvmdb/device/{{adom_name}}"
             #verbose: 1
-    register: status_output 
+    register: jsoncontent
+    
+  - local_action: copy content={{ jsoncontent }} dest=/var/tmp/junk
 
-  - name: display out
-    debug: 
-      var: status_output
+   
+  - name: taking out sync status of device from file.
+    shell: cat /var/tmp/junk |awk -F, '{print $11}' |grep conf_status |awk '{print $2}'|cut -f2 -d'"'
+    register: sync_status
 
-
-    #- name: display jason
-    #debug: 
-    #  msg: "{{ status_output.json | list }}""
-
-  
-  - set_fact: session_id="{{ status_output.json | json_query(jmesquery) }}"    #from_json | json_query('changed.response_data.sessionid') }}"
-     # session_id: "{{ status_output.json | jason_query('meta.response_data.sessionid') }}
-  - name: display out   
-    debug: 
-      jmesquery: "[*].sessionid"
-      
-      
-      
+    #- name: Print out sysnc status
+    #debug:
+    #       msg: "{{ sync_status }}"
+            
+  - name: Sending an e-mail using Gmail SMTP servers
+    community.general.mail:
+      host: smtp.gmail.com
+      port: 587
+      username: sanjaychahar21@gmail.com
+      password: mysecret
+      to: John Smith <rhyddian.llewellyn@infradynamic.com>
+      subject: Device sysnc status update
+      body: adom {{ adom_name }} is out of sync.
+    delegate_to: localhost
+    when: sync_status == "outofsync"
