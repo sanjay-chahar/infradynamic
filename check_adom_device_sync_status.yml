@@ -36,7 +36,7 @@
       port: 587
       username: sanjaychahar21@gmail.com
       password: mysecret
-      to: John Smith <rhyddian.llewellyn@infradynamic.com>
+      to: RL <rhyddian.llewellyn@infradynamic.com>
       subject: Device sysnc status update
       body: adom {{ adom_name }} is out of sync.
     delegate_to: localhost
