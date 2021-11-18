@@ -30,7 +30,7 @@
     #debug:
     #       msg: "{{ sync_status }}"
             
-  - name: Sending an e-mail using Gmail SMTP servers
+  - name: Sending an e-mail of device status
     community.general.mail:
       host: smtp.gmail.com
       port: 587
