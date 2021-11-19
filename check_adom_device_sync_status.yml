@@ -34,9 +34,9 @@
     community.general.mail:
       host: smtp.gmail.com
       port: 587
-      username: sanjaychahar21@gmail.com
+      username: 7877921@gmail.com
       password: mysecret
-      to: RL <rhyddian.llewellyn@infradynamic.com>
+      to: RL <21090778@infradynamic.com>
       subject: Device sysnc status update
       body: adom {{ adom_name }} is out of sync.
     delegate_to: localhost
